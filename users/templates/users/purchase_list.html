@@ -1,0 +1,35 @@
+{%extends 'base.html'%}
+{%block page_title%}
+USERS
+{%endblock page_title%}
+
+
+{%block content%}
+    <br>
+    <h1 class='h1-class'>COMPRAS</h1>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" >Nome</th>
+                <th scope="col" >Preço</th>
+                <th scope="col" >Categoria</th>
+                <th scope="col" >Cartão de crédito</th>
+                <th scope="col" >Descrição</th>
+                <th scope="col" >Data de compra</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purch in purchase_list %}
+            <tr>
+                <td scope="row">{{ purch.name }}</td>
+                <td scope="row">{{ purch.price }}</td>
+                <td scope="row">{{ purch.category }}</td>
+                <td scope="row">{{ purch.credit_card }}</td>
+                <td scope="row">{{ purch.description }}</td>
+                <td scope="row">{{ purch.data_of_purchase }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

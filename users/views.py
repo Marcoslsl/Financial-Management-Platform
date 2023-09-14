@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from .models import Purchase
+from django.views.generic import (
+    ListView,
+)
 
-# Create your views here.
+
+class UserView(ListView):
+    model = Purchase

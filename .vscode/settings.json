@@ -1,10 +1,17 @@
 {
   "files.exclude": {
-    "**/*.pyc*": { "when": "$(basename).py" },
+    "**/*.pyc*": {
+      "when": "$(basename).py"
+    },
     "**/__pycache__": true,
     "**/.pytest_cache": true
   },
   "[python]": {
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "emmet.includeLanguages": {
+    "django-html": "html",
+  }
 }
