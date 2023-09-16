@@ -18,3 +18,16 @@
 .h1-class{
   color: var(--cor-3);
 }
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os elementos quebrem para a próxima linha quando não cabem na largura */
+    justify-content: space-between; /* Distribui os elementos igualmente com espaço entre eles */
+}
+
+.form-group {
+    flex: 1; /* Distribui o espaço disponível igualmente entre os elementos */
+    margin-right: 10px; 
+        white-space: nowrap;
+/* Opcional: adicione margem à direita para espaço entre os elementos */
+}

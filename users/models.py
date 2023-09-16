@@ -1,5 +1,13 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+
+
+def validate_min_value_of_decimal_field(value: int | float):
+    if value < 0:
+        raise ValidationError(
+            "Number is less than zero", params={"value": value}
+        )
 
 
 class Purchase(models.Model):
@@ -11,7 +19,7 @@ class Purchase(models.Model):
     CLOTHING = "Clothing"
     FOOD = "Food"
     ENTERTAINMENT = "Entertainment"
-    HOME = "HOME"
+    HOME = "Home"
 
     YES = "Yes"
     NO = "No"
@@ -31,7 +39,11 @@ class Purchase(models.Model):
     CREDIT_CARD_CHOICES = [(YES, "sim"), (NO, "Não")]
 
     name = models.CharField(max_length=30)
-    price = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[validate_min_value_of_decimal_field],
+    )
     category = models.CharField(
         max_length=20, choices=CATEGORY_CHOICES, default=None
     )
