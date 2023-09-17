@@ -1,3 +1,9 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 :root {
   --cor-1: #f5f5f5;
   --cor-2: #e9e9e9;
@@ -7,12 +13,21 @@
 }
 
 .custom-navbar{
-  border-radius: 15px;
-  background-color: var(--cor-1);
+  background-color: var(--cor-3);
+  margin: 0; /* Remova a margem padrão da lista */
+  padding: 10px 20px; /* Adicione espaçamento interno aos elementos */
+}
+
+.title-navbar{
+  color: var(--cor-1);
 }
 
 .btn-color{
   background-color: var(--cor-1);
+}
+
+.btn-logout{
+  border-radius: 10px;
 }
 
 .h1-class{
@@ -30,4 +45,48 @@
     margin-right: 10px; 
         white-space: nowrap;
 /* Opcional: adicione margem à direita para espaço entre os elementos */
+}
+
+.login-cadastro {
+        width: 300px; /* Define a largura do container */
+        padding: 20px; /* Espaçamento interno */
+        border-radius: 10px; /* Bordas arredondadas */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+        text-align: center; /* Centraliza o conteúdo verticalmente */
+        border: 2px solid var(--cor-3);
+    }
+
+.div-login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-cad-log {
+    padding: 10px 20px;
+    background-color: var(--cor-4);
+    color: var(--cor-1);
+    transition: background-color 0.3s;
+}
+
+.btn-cad-log:hover {
+    background-color: rgba(0, 133, 132, 0.5); /* Use a cor com 70% de transparência ao passar o mouse */
 }
