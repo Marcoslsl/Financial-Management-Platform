@@ -16,6 +16,7 @@ USERS
                 <th scope="col" >Cartão de crédito</th>
                 <th scope="col" >Descrição</th>
                 <th scope="col" >Data de compra</th>
+                <th scope="col" >Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -27,13 +28,16 @@ USERS
                 <td scope="row">{{ purch.credit_card }}</td>
                 <td scope="row">{{ purch.description }}</td>
                 <td scope="row">{{ purch.data_of_purchase }}</td>
+                <td scope="row">
+                <a href="{% url 'delete_purchase' pk=purch.pk %}" class='btn btn-danger btn-sm' data-confirm="Tem certeza que deseja excluir este item?">Excluir</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <button class="btn btn-outline-success" id="add-new-purchase-btn">Adicionar Nova Compra</button>
 
-<div id="new-purchase-form" class="div-custom">
+    <div id="new-purchase-form" class="div-custom" style="display: none;">
     <br>
     <h4>Adicionar Nova Compra</h4>
     <form method="post" action="{% url 'create_purchase' %}" class="form-horizontal">
@@ -92,8 +96,8 @@ USERS
             </div>
         </div><br>
         <div>
-                <button type="submit" class="btn btn-primary">Adicionar</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+        </div>
     </form>
 </div>
 {% endblock %}
