@@ -1,3 +1,5 @@
+import pandas as pd
+import plotly.express as px
 from django.shortcuts import render
 from .models import Purchase
 from django.views.generic import ListView, CreateView
@@ -13,6 +15,7 @@ from django.contrib.auth import (
     logout as logout_django,
 )
 from django.contrib.auth.decorators import login_required
+from .analysis.main import Analise
 
 
 def valida_data(data: str) -> bool:
@@ -120,3 +123,33 @@ def delete_account(request):
     user = User.objects.get(request.user)
     user.delete()
     return redirect("login")
+
+
+def analises(request):
+    analise = Analise()
+    purchases_list = analise.return_json_purchase(request)
+
+    df = pd.DataFrame(purchases_list)
+
+    df["data_of_purchase"] = pd.to_datetime(df["data_of_purchase"])
+
+    fig = px.scatter(
+        df,
+        x="data_of_purchase",
+        y="price",
+        hover_data="name",
+        color="credit_card",
+        trendline="ols",
+        trendline_scope="overall",
+    )
+
+    fig.update_layout(
+        title_text="Gastos ao longo do tempo | Tendência de gastos",
+        title_x=0.45,  # Define o título no meio horizontal do gráfico (0 a 1)
+        title_font=dict(size=30, family="Arial, sans-serif", color="black"),
+    )
+
+    fig.update_layout(height=700)
+    chart = fig.to_html()
+
+    return render(request, "users/analises.html", {"chart": chart})
