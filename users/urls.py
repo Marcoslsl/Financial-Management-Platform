@@ -8,4 +8,5 @@ urlpatterns = [
     path("cadastro/", cadastro, name="cadastro"),
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
+    path("delete-account/", delete_account, name="delete_account"),
 ]

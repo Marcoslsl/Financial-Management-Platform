@@ -17,8 +17,11 @@
   <body>
     <nav class="navbar custom-navbar">
     <div class="container-fluid">
-    <a href={% url 'user_view'%} class="navbar-brand title-navbar">HOME</a>
-    <a href={% url 'logout' %} class='btn btn-danger btn-sm btn-logout' data-confirm="Tem certeza?">Logout</a>
+        <a href={% url 'user_view'%} class="navbar-brand title-navbar">HOME</a>
+        <div class="ml-auto">  <!-- class do boostrap paraalinhar os elementos à dirita -->
+            <a href={% url 'delete_account' %} class='btn btn-danger btn-sm btn-logout' data-confirm="Todos os seus dados serão perdidos, tem certeza que deseja prosseguir?">Apagar conta</a>
+            <a href={% url 'logout' %} class='btn btn-danger btn-sm btn-logout' data-confirm="Tem certeza?">Logout</a>
+        </div>
     </div>
     </nav>
     <main class="container">{%block content%}{%endblock content%}</main>
@@ -27,30 +30,6 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
-    <script>
-          document.getElementById("add-new-purchase-btn").addEventListener("click", function () {
-        var newPurchaseForm = document.getElementById("new-purchase-form");
-        if (newPurchaseForm.style.display === "none" || newPurchaseForm.style.display === "") {
-            newPurchaseForm.style.display = "block";
-        } else {
-            newPurchaseForm.style.display = "none";
-        }
-    });
-    </script>
-    <script>
-    // Função para lidar com o clique no botão Excluir
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.btn-danger');
-
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                const confirmMessage = button.getAttribute('data-confirm');
-                if (!confirm(confirmMessage)) {
-                    event.preventDefault(); 
-                }
-            });
-        });
-    });
-</script>
+<script src="{% static 'js/javascript_files.js' %}"></script>
   </body>
 </html>

@@ -34,7 +34,8 @@ def transform_date(input_date: str) -> str:
 
 @login_required(login_url="login")
 def user_view(request):
-    purchase = Purchase.objects.all()
+    username = request.user
+    purchase = Purchase.objects.filter(user=username)
     return render(
         request, "users/purchase_list.html", {"purchase_list": purchase}
     )
@@ -55,7 +56,9 @@ def create_purchase(request: HttpRequest) -> any:
     else:
         req["data_of_purchase"] = transform_date(req["data_of_purchase"])
 
-    purchase = Purchase(
+    user = User.objects.get(username=request.user)
+    purchase = Purchase.objects.create(
+        user=user,
         name=req["name"],
         price=float(req["price"]),
         category=req["category"],
@@ -110,4 +113,10 @@ def login(request):
 
 def logout(request):
     logout_django(request)
+    return redirect("login")
+
+
+def delete_account(request):
+    user = User.objects.get(request.user)
+    user.delete()
     return redirect("login")
