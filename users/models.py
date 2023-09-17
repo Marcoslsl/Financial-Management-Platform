@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 
 def validate_min_value_of_decimal_field(value: int | float):
@@ -38,6 +39,7 @@ class Purchase(models.Model):
 
     CREDIT_CARD_CHOICES = [(YES, "sim"), (NO, "Não")]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     price = models.DecimalField(
         max_digits=10,
