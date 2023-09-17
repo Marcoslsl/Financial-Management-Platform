@@ -1,7 +1,5 @@
 body, html {
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 :root {
@@ -20,6 +18,10 @@ body, html {
 
 .title-navbar{
   color: var(--cor-1);
+}
+
+.login-text{
+  color: black;
 }
 
 .btn-color{
@@ -61,6 +63,7 @@ body, html {
     align-items: center;
     justify-content: center;
     height: 100%;
+    width: 100%;
 }
 
 
