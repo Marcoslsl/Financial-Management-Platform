@@ -1,22 +1,28 @@
 from pathlib import Path
 import os
+from decouple import config
+import logging
+from logging import FileHandler, StreamHandler
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    "django-insecure-_4c*_zo=l8%qgf#qg69gg+k9qi(66!64^xmewtckkz+2jr_f7-"
-)
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = []
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] - %(message)s",
+    datefmt="%d-%m-%Y %H:%M:%S",
+    handlers=[
+        FileHandler(os.path.join(BASE_DIR, "django.log")),
+        StreamHandler(),
+    ],
+)
 
 
 # Application definition
@@ -65,13 +71,29 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if config("ENVIROMENT") == "DEV":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
+    logging.info("Enviroment: DEV")
+elif config("ENVIROMENT") == "PROD":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME"),
+            "USER": config("USER_NAME"),
+            "PASSWORD": config("PASSWORD"),
+            "HOST": config("HOST"),
+            "PORT": "5432",
+        }
+    }
+    logging.info("Enviroment: PROD")
+else:
+    logging.info("Enviroment: NOT SET")
+    raise ValueError("ENVIROMENT VARIABLE ERROR")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
