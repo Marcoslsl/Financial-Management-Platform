@@ -161,7 +161,6 @@ def analises(request):
     chart = fig.to_html()
 
     purchases_analysis = analise.analyse_current_month_and_last_month(request)
-
     return render(
         request,
         "users/analises.html",

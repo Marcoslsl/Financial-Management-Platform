@@ -75,6 +75,4 @@ class Analise:
             ]
         ].to_dict(orient="records")
 
-        print(final_dataframe)
-
         return final_dataframe
