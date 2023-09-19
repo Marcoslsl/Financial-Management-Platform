@@ -125,9 +125,17 @@ def delete_account(request):
     return redirect("login")
 
 
+@login_required(login_url="login")
 def analises(request):
     analise = Analise()
-    purchases_list = analise.return_json_purchase(request)
+
+    purchases_list = analise.return_json_purchase_by_user(request)
+
+    if len(purchases_list) == 0:
+        return render(
+            request,
+            "users/analises.html",
+        )
 
     df = pd.DataFrame(purchases_list)
 
@@ -152,4 +160,10 @@ def analises(request):
     fig.update_layout(height=700)
     chart = fig.to_html()
 
-    return render(request, "users/analises.html", {"chart": chart})
+    purchases_analysis = analise.analyse_current_month_and_last_month(request)
+
+    return render(
+        request,
+        "users/analises.html",
+        {"chart": chart, "purchases_analysis": purchases_analysis},
+    )

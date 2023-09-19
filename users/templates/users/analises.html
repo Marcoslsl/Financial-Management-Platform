@@ -4,5 +4,46 @@ ANALISES
 {%endblock page_title%}
 
 {%block content%}
+{% if purchases_analysis %}
 {{ chart|safe }}
+<h1>ANALISES</h1>
+
+    <div>
+        <div class="bg-red">Aumento</div>
+        <div class="bg-green">Redução</div>
+        <div class="bg-gray">Zerado</div><br><br>
+    </div>
+   <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" >Categoria</th>
+                <th scope="col" >Gasto Mês Passado</th>
+                <th scope="col" >Gasto Mês Corrente</th>
+                <th scope="col" >Diferença percentual</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purch in purchases_analysis %}
+            <tr>
+                <td scope="row">{{ purch.category }}</td>
+                <td scope="row">{{ purch.price_last_month }}</td>
+                <td scope="row">{{ purch.price_current_month }}</td>
+                <td> 
+                    <div class="
+                    {% if purch.percent_difference > 0 %}bg-red
+                    {% elif purch.percent_difference == 0 %}bg-gray
+                    {% else %}bg-green{% endif %}">
+                    {{ purch.percent_difference_abs }}%
+                    </div>
+                </td>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <h1>Sugestões customizadas</h1>
+    {% else %}
+    <br><br>
+    <h3>Não existe dados cadastrados no momento.</h3>
+    {% endif %}
 {% endblock %}

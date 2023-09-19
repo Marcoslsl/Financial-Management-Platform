@@ -104,3 +104,28 @@ label {
 .btn-cad-log:hover {
     background-color: rgba(0, 133, 132, 0.5); /* Use a cor com 70% de transparência ao passar o mouse */
 }
+
+.bg-red {
+    display:inline-block;
+    background-color: var(--cor-6);
+    color: white;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.bg-gray {
+    display:inline-block;
+    background-color: gray;
+    color:white ;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.bg-green {
+    display:inline-block;
+    background-color: var(--cor-4);
+    color: white; 
+    border-radius: 10px;
+    padding: 3px;
+
+}

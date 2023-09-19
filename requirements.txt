@@ -12,6 +12,7 @@ pathspec==0.11.2
 patsy==0.5.3
 platformdirs==3.10.0
 plotly==5.17.0
+psycopg2-binary==2.9.7
 pycodestyle==2.11.0
 pydocstyle==6.3.0
 pymongo==4.5.0
