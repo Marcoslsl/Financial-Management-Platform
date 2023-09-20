@@ -2,12 +2,9 @@ import pandas as pd
 import plotly.express as px
 from django.shortcuts import render
 from .models import Purchase
-from django.views.generic import ListView, CreateView
-from django.urls import reverse_lazy
-from django.http import HttpResponse, HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from datetime import date, datetime
-import re
 from django.contrib.auth.models import User
 from django.contrib.auth import (
     authenticate,
@@ -16,23 +13,7 @@ from django.contrib.auth import (
 )
 from django.contrib.auth.decorators import login_required
 from .analysis.main import Analise
-
-
-def valida_data(data: str) -> bool:
-    padrao = r"^\d{2}[-/]\d{2}[-/]\d{4}$"
-
-    if re.match(padrao, data):
-        return True
-    else:
-        return False
-
-
-def transform_date(input_date: str) -> str:
-    date_obj = datetime.strptime(input_date, "%d-%m-%Y")
-
-    output_date = date_obj.strftime("%Y-%m-%d")
-
-    return output_date
+from .utils import *
 
 
 @login_required(login_url="login")
@@ -40,7 +21,12 @@ def user_view(request):
     username = request.user
     purchase = Purchase.objects.filter(user=username)
     return render(
-        request, "users/purchase_list.html", {"purchase_list": purchase}
+        request,
+        "users/purchase_list.html",
+        {
+            "purchase_list": purchase,
+            "today_date": date.today().strftime("%d-%m-%Y"),
+        },
     )
 
 
