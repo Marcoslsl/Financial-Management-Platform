@@ -15,21 +15,36 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   </head>
   <body>
+    <div id="page-container">
+
+
     <nav class="navbar custom-navbar">
     <div class="container-fluid">
         <a href={% url 'user_view'%} class="navbar-brand title-navbar">HOME</a>
+        <div class="middle-text">
+          <b>Plataforma de gerenciamento financeiro</b>
+        </div>
         <div class="ml-auto">  <!-- class do boostrap paraalinhar os elementos à dirita -->
-            <a href={% url 'delete_account' %} class='btn btn-danger btn-sm btn-logout' data-confirm="Todos os seus dados serão perdidos, tem certeza que deseja prosseguir?">Apagar conta</a>
-            <a href={% url 'logout' %} class='btn btn-danger btn-sm btn-logout' data-confirm="Tem certeza?">Logout</a>
+            <a href={% url 'delete_account' %} class='btn btn-danger btn-sm btn-rounded' data-confirm="Todos os seus dados serão perdidos, tem certeza que deseja prosseguir?">Apagar conta</a>
+            <a href={% url 'logout' %} class='btn btn-danger btn-sm btn-rounded' data-confirm="Tem certeza?">Logout</a>
         </div>
     </div>
     </nav>
-    <main class="container">{%block content%}{%endblock content%}</main>
+
+    <main id="content-wrap" class="container main">{%block content%}{%endblock content%}</main>
+
+    <footer
+    class="text-center text-white fixarRodape">
+            <span class="me-3"></span>
+    </footer>
+
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
 <script src="{% static 'js/javascript_files.js' %}"></script>
+  </div>
   </body>
 </html>
