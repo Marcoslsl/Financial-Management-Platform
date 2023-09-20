@@ -2,9 +2,9 @@ import pandas as pd
 import plotly.express as px
 from django.shortcuts import render
 from .models import Purchase
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, HttpResponse
 from django.shortcuts import redirect
-from datetime import date, datetime
+from datetime import date
 from django.contrib.auth.models import User
 from django.contrib.auth import (
     authenticate,
@@ -12,12 +12,12 @@ from django.contrib.auth import (
     logout as logout_django,
 )
 from django.contrib.auth.decorators import login_required
-from .analysis.main import Analise
+from .analysis.main import Analise, Graph
 from .utils import *
 
 
 @login_required(login_url="login")
-def user_view(request):
+def user_view(request: HttpRequest) -> HttpResponse:
     username = request.user
     purchase = Purchase.objects.filter(user=username)
     return render(
@@ -30,7 +30,7 @@ def user_view(request):
     )
 
 
-def create_purchase(request: HttpRequest) -> any:
+def create_purchase(request: HttpRequest) -> HttpResponse:
     req = request.POST.dict()
 
     if req["data_of_purchase"] == "":
@@ -59,13 +59,13 @@ def create_purchase(request: HttpRequest) -> any:
     return redirect("user_view")
 
 
-def delete_purchase(request: HttpRequest, pk: int) -> any:
+def delete_purchase(request: HttpRequest, pk: int) -> HttpResponse:
     purchase = Purchase(pk=pk)
     purchase.delete()
     return redirect("user_view")
 
 
-def cadastro(request):
+def cadastro(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         return render(request, "users/cadastro.html")
     else:
@@ -84,7 +84,7 @@ def cadastro(request):
         return redirect("user_view")
 
 
-def login(request):
+def login(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         return render(request, "users/login.html")
     else:
@@ -97,22 +97,22 @@ def login(request):
             login_django(request, user)
             return redirect("user_view")
         else:
-            return JsonResponse({"Error": "Unauthorized"})
+            return HttpResponse({"Error": "Unauthorized"})
 
 
-def logout(request):
+def logout(request: HttpRequest) -> HttpResponse:
     logout_django(request)
     return redirect("login")
 
 
-def delete_account(request):
+def delete_account(request: HttpRequest) -> HttpResponse:
     user = User.objects.get(request.user)
     user.delete()
     return redirect("login")
 
 
 @login_required(login_url="login")
-def analises(request):
+def analises(request: HttpRequest) -> HttpRequest:
     analise = Analise()
 
     purchases_list = analise.return_json_purchase_by_user(request)
@@ -127,26 +127,20 @@ def analises(request):
 
     df["data_of_purchase"] = pd.to_datetime(df["data_of_purchase"])
 
-    fig = px.scatter(
-        df,
-        x="data_of_purchase",
-        y="price",
-        hover_data="name",
-        color="credit_card",
-        trendline="ols",
-        trendline_scope="overall",
+    kwargs = {
+        "x": "data_of_purchase",
+        "y": "price",
+        "hover_data": "name",
+        "color": "credit_card",
+        "trendline": "ols",
+        "trendline_scope": "overall",
+    }
+
+    chart = Graph().scatter(
+        df=df, title="Gastos ao longo do tempo | Tendência de gastos", **kwargs
     )
-
-    fig.update_layout(
-        title_text="Gastos ao longo do tempo | Tendência de gastos",
-        title_x=0.45,  # Define o título no meio horizontal do gráfico (0 a 1)
-        title_font=dict(size=30, family="Arial, sans-serif", color="black"),
-    )
-
-    fig.update_layout(height=700)
-    chart = fig.to_html()
-
     purchases_analysis = analise.analyse_current_month_and_last_month(request)
+
     return render(
         request,
         "users/analises.html",

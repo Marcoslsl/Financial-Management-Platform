@@ -3,6 +3,7 @@ from users.models import Purchase
 from django.http import HttpRequest, JsonResponse
 from datetime import date
 import pandas as pd
+import plotly.express as px
 
 
 class Analise:
@@ -76,3 +77,22 @@ class Analise:
         ].to_dict(orient="records")
 
         return final_dataframe
+
+
+class Graph:
+    def __init__(self) -> None:
+        pass
+
+    def scatter(self, df: pd.DataFrame, title: str, **kwargs) -> any:
+        fig = px.scatter(df, **kwargs)
+        fig.update_layout(
+            title_text=title,
+            title_x=0.45,  # Define o título no meio horizontal do gráfico (0 a 1)
+            title_font=dict(
+                size=30, family="Arial, sans-serif", color="black"
+            ),
+        )
+        fig.update_layout(height=700)
+        chart = fig.to_html()
+
+        return chart
