@@ -44,6 +44,17 @@ ANALISES
     <h1>Sugestões customizadas</h1>
     {% else %}
     <br><br>
-    <h3>Não existe dados cadastrados no momento.</h3>
+    <div>
+        <h3>Não existe dados cadastrados no momento.</h3><br>
+        <h5>Motivos de não ter análises ainda</h5>
+        <ul>
+            <li>Não ter nenhum dado cadastrado.</li>
+            <li>Não ter dados de meses anteriores.
+                <ul>
+                    <li>As análises são baseadas nos meses anteriores</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     {% endif %}
 {% endblock %}
