@@ -10,4 +10,9 @@ urlpatterns = [
     path("logout/", logout, name="logout"),
     path("delete-account/", delete_account, name="delete_account"),
     path("analises/", analises, name="analises"),
+    path(
+        "send-reminding-email-to-all-users/",
+        send_mail_to_all_users,
+        name="email",
+    ),
 ]

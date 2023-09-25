@@ -1,5 +1,4 @@
 import pandas as pd
-import plotly.express as px
 from django.shortcuts import render
 from .models import Purchase
 from django.http import HttpRequest, JsonResponse, HttpResponse
@@ -14,6 +13,23 @@ from django.contrib.auth import (
 from django.contrib.auth.decorators import login_required
 from .analysis.main import Analise, Graph
 from .utils import *
+from .email.email_handler import send_mail as send_email
+
+
+def send_mail_to_all_users(request: HttpRequest) -> JsonResponse:
+    subject = "Lembrete | Plataforma de gerenciamento financeiro"
+    message = "Lembre de adicionar os dados de gastos dessa semana. https://django-financial-management-platform.onrender.com/"
+    emails_to_send = User.objects.filter(is_superuser=False)
+    emails = list(set([email.email for email in emails_to_send]))
+
+    res = send_email(
+        request,
+        subject,
+        message,
+        emails,
+    )
+
+    return JsonResponse(res)
 
 
 @login_required(login_url="login")
