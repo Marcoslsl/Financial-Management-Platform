@@ -56,5 +56,24 @@ class Purchase(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(null=True, blank=True)
 
+    def update_purchase(self, **kwargs) -> None:
+        if "name" in kwargs:
+            self.name = kwargs["name"]
+        if "price" in kwargs:
+            self.price = kwargs["price"]
+        if "category" in kwargs:
+            self.category = kwargs["category"]
+        if "credit_card" in kwargs:
+            self.credit_card = kwargs["credit_card"]
+        if "description" in kwargs:
+            self.description = kwargs[
+                "description"
+            ]  # Defina a data de atualização como a data e hora atuais
+        self.updated_at = timezone.now()
+
+        # Salve as mudanças no banco de dados
+        self.save()
+        return None
+
     def __str__(self) -> str:
         return self.name

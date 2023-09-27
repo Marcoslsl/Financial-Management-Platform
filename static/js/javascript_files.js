@@ -1,3 +1,4 @@
+
 document.getElementById("add-new-purchase-btn").addEventListener("click", function () {
         var newPurchaseForm = document.getElementById("new-purchase-form");
         if (newPurchaseForm.style.display === "none" || newPurchaseForm.style.display === "") {

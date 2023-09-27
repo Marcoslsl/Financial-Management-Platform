@@ -18,3 +18,11 @@ def transform_date(input_date: str) -> str:
     output_date = date_obj.strftime("%Y-%m-%d")
 
     return output_date
+
+
+def transform_date_inverse(input_date: str) -> str:
+    date_obj = datetime.strptime(input_date, "%Y-%m-%d")
+
+    output_date = date_obj.strftime("%d-%m-%Y")
+
+    return output_date

@@ -75,6 +75,29 @@ def create_purchase(request: HttpRequest) -> HttpResponse:
     return redirect("user_view")
 
 
+def update_purchase(request: HttpRequest, pk: int) -> HttpResponse:
+    purchase = Purchase.objects.get(pk=pk)
+    return render(
+        request,
+        "users/edit_purchase.html",
+        {
+            "purchase_list": purchase,
+            "today_date": date.today().strftime("%d-%m-%Y"),
+            "pk_value": pk,
+            "data_of_purchase": transform_date_inverse(
+                str(purchase.data_of_purchase)
+            ),
+        },
+    )
+
+
+def update_purchase_values(request: HttpRequest, pk: int) -> HttpResponse:
+    req = request.POST.dict()
+    purchase = Purchase.objects.get(pk=pk)
+    purchase.update_purchase(**req)
+    return redirect("user_view")
+
+
 def delete_purchase(request: HttpRequest, pk: int) -> HttpResponse:
     purchase = Purchase(pk=pk)
     purchase.delete()

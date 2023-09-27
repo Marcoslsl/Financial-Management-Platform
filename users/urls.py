@@ -5,6 +5,12 @@ urlpatterns = [
     path("", user_view, name="user_view"),
     path("create/", create_purchase, name="create_purchase"),
     path("delete/<int:pk>", delete_purchase, name="delete_purchase"),
+    path("update/<int:pk>", update_purchase, name="update_purchase"),
+    path(
+        "update_send_form/<int:pk>",
+        update_purchase_values,
+        name="update_purchase_values",
+    ),
     path("cadastro/", cadastro, name="cadastro"),
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),

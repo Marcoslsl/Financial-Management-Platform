@@ -30,6 +30,7 @@ USERS
                 <td scope="row">{{ purch.data_of_purchase }}</td>
                 <td scope="row">
                 <a href="{% url 'delete_purchase' pk=purch.pk %}" class='btn btn-danger btn-sm' data-confirm="Tem certeza que deseja excluir este item?">Excluir</a>
+                <a href="{% url 'update_purchase' pk=purch.pk %}"class="btn btn-secondary btn-sm" id="edit-purchase-btn">Editar</a>
                 </td>
             </tr>
             {% endfor %}
