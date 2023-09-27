@@ -63,9 +63,9 @@ class Analise:
             / merged_df["price_last_month"]
         ) * 100
 
-        merged_df["percent_difference_abs"] = merged_df[
-            "percent_difference"
-        ].abs()
+        merged_df["percent_difference_abs"] = (
+            merged_df["percent_difference"].abs().astype("float").round(2)
+        )
         final_dataframe = merged_df[
             [
                 "category",
