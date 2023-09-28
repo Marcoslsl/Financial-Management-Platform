@@ -1,6 +1,5 @@
-import json
-from users.models import Purchase
-from django.http import HttpRequest, JsonResponse
+from purchases.models import Purchase
+from django.http import HttpRequest
 from datetime import date
 import pandas as pd
 import plotly.express as px
